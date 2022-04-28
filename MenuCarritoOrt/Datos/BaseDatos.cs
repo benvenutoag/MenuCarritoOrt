@@ -14,5 +14,7 @@ namespace MenuCarritoOrt.Datos
 
         }
         public DbSet<Usuario> Usuarios { get; set; }
+
+        public  DbSet<Postre> Postres { get; set; }
     }
 }
