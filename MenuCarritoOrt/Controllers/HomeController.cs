@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MenuCarritoOrt.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : Controller /*test*/
     {
         private readonly ILogger<HomeController> _logger;
 
