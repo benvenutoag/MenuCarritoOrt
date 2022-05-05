@@ -34,7 +34,7 @@ namespace MenuCarritoOrt.Controllers
             }
 
             var bebida = await _context.Bebidas
-                .FirstOrDefaultAsync(m => m.id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (bebida == null)
             {
                 return NotFound();
@@ -88,7 +88,7 @@ namespace MenuCarritoOrt.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Nombre,Precio,Descripcion,id")] Bebida bebida)
         {
-            if (id != bebida.id)
+            if (id != bebida.Id)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace MenuCarritoOrt.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BebidaExists(bebida.id))
+                    if (!BebidaExists(bebida.Id))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace MenuCarritoOrt.Controllers
             }
 
             var bebida = await _context.Bebidas
-                .FirstOrDefaultAsync(m => m.id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (bebida == null)
             {
                 return NotFound();
@@ -147,7 +147,7 @@ namespace MenuCarritoOrt.Controllers
 
         private bool BebidaExists(int id)
         {
-            return _context.Bebidas.Any(e => e.id == id);
+            return _context.Bebidas.Any(e => e.Id == id);
         }
     }
 }
