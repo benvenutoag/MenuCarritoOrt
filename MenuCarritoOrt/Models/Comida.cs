@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MenuCarritoOrt.Models
 {
-    public class Postre
+    public class Comida
     {
         public string Nombre { get; set; }
 
@@ -14,8 +14,5 @@ namespace MenuCarritoOrt.Models
         public string Descripcion { get; set; }
 
         public int Id { get; set; }
-
-
-
     }
 }
