@@ -10,22 +10,22 @@ using MenuCarritoOrt.Models;
 
 namespace MenuCarritoOrt.Controllers
 {
-    public class PostresController : Controller
+    public class ComidasController : Controller
     {
         private readonly BaseDatos _context;
 
-        public PostresController(BaseDatos context)
+        public ComidasController(BaseDatos context)
         {
             _context = context;
         }
 
-        // GET: Postres
+        // GET: Comidas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Postres.ToListAsync());
+            return View(await _context.Comidas.ToListAsync());
         }
 
-        // GET: Postres/Details/5
+        // GET: Comidas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace MenuCarritoOrt.Controllers
                 return NotFound();
             }
 
-            var postre = await _context.Postres
+            var comida = await _context.Comidas
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (postre == null)
+            if (comida == null)
             {
                 return NotFound();
             }
 
-            return View(postre);
+            return View(comida);
         }
 
-        // GET: Postres/Create
+        // GET: Comidas/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Postres/Create
+        // POST: Comidas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nombre,Precio,Descripcion,id")] Postre postre)
+        public async Task<IActionResult> Create([Bind("Nombre,Precio,Descripcion,Id")] Comida comida)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(postre);
+                _context.Add(comida);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(postre);
+            return View(comida);
         }
 
-        // GET: Postres/Edit/5
+        // GET: Comidas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace MenuCarritoOrt.Controllers
                 return NotFound();
             }
 
-            var postre = await _context.Postres.FindAsync(id);
-            if (postre == null)
+            var comida = await _context.Comidas.FindAsync(id);
+            if (comida == null)
             {
                 return NotFound();
             }
-            return View(postre);
+            return View(comida);
         }
 
-        // POST: Postres/Edit/5
+        // POST: Comidas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Nombre,Precio,Descripcion,id")] Postre postre)
+        public async Task<IActionResult> Edit(int id, [Bind("Nombre,Precio,Descripcion,Id")] Comida comida)
         {
-            if (id != postre.Id)
+            if (id != comida.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace MenuCarritoOrt.Controllers
             {
                 try
                 {
-                    _context.Update(postre);
+                    _context.Update(comida);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PostreExists(postre.Id))
+                    if (!ComidaExists(comida.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace MenuCarritoOrt.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(postre);
+            return View(comida);
         }
 
-        // GET: Postres/Delete/5
+        // GET: Comidas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace MenuCarritoOrt.Controllers
                 return NotFound();
             }
 
-            var postre = await _context.Postres
+            var comida = await _context.Comidas
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (postre == null)
+            if (comida == null)
             {
                 return NotFound();
             }
 
-            return View(postre);
+            return View(comida);
         }
 
-        // POST: Postres/Delete/5
+        // POST: Comidas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var postre = await _context.Postres.FindAsync(id);
-            _context.Postres.Remove(postre);
+            var comida = await _context.Comidas.FindAsync(id);
+            _context.Comidas.Remove(comida);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PostreExists(int id)
+        private bool ComidaExists(int id)
         {
-            return _context.Postres.Any(e => e.Id == id);
+            return _context.Comidas.Any(e => e.Id == id);
         }
     }
 }
