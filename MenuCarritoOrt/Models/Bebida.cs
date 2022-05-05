@@ -7,7 +7,6 @@ namespace MenuCarritoOrt.Models
 {
     public class Bebida
     {
-        // comentar
         public string Nombre { get; set; }
 
         public double Precio { get; set; }
