@@ -5,15 +5,9 @@ using System.Threading.Tasks;
 
 namespace MenuCarritoOrt.Models
 {
-    public class Bebida
+    public class Bebida : Producto
     {
-        public string Nombre { get; set; }
-
-        public double Precio { get; set; }
-
-        public string Descripcion { get; set; }
-
-        public int Id { get; set; }
+    
 
     }
 }

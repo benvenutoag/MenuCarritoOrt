@@ -69,3 +69,42 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+/*#navMenu > span {
+    display: block;
+    width: 28px;
+    height: 2px;
+    border-radius: 9999px;
+    background-color: black;
+}
+
+#navMenu > span:not(:last-child){
+    margin-bottom: 7px;
+}
+
+#navMenu, #navMenu > span {
+    transition: all .4s ease-in-out;
+}
+
+#navMenu.active {
+    transition-delay: 0.8s;
+    transform: rotate(45deg);
+}
+
+#navMenu.active > span:nth-child(2){
+    width: 0;
+}
+
+#navMenu.active > span:nth-child(1),
+#navMenu.active > span:nth-child(3) {
+    transition-delay: .4s;
+}
+
+#navMenu.active > span:nth-child(1){
+    transform: translateY(9px);
+}
+
+#navMenu.active > span:nth-child(3) {
+    transform: translateY() rotate(90deg);
+}
+*/
