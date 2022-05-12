@@ -21,5 +21,7 @@ namespace MenuCarritoOrt.Datos
 
         public DbSet<Comida> Comidas { get; set; }
 
+        public DbSet<Categoria> Categorias { get; set; }
+
     }
 }
