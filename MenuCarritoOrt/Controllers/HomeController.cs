@@ -18,6 +18,7 @@ namespace MenuCarritoOrt.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
 
@@ -25,6 +26,21 @@ namespace MenuCarritoOrt.Controllers
             //aca
         }
 
+
+        //public IActionResult Index(string email)
+        //{
+        //    if (email == "schargo7@gmail.com")
+        //    {
+        //        return RedirectToAction("Index", "Usuarios");
+        //    }
+        //    else
+        //    {
+
+                
+        //    }
+
+
+        //}
         public IActionResult Privacy()
         {
             return View();
