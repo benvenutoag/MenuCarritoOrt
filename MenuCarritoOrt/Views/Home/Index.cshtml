@@ -2,17 +2,18 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<section class="text-center">
     <h1 class="display-4">Bienvenido al Menú!</h1>
-    <li>
-        <a href="@Url.Action("Index", "Usuario")" class="elements">
-            <span>Usuarios</span>
-        </a>
-    </li>
-    <li>
-        <a href="@Url.Action("Index", "Categorias")" class="elements">
+    
+    <div class="text-left">
+        <a align="left" href="@Url.Action("Index", "Categorias")" class="elements">
+            <!--<img src="@Url.Content("~/Img/Menú-Foto2.jpg")" width="300px"></a>-->
             <span>Categorias</span>
+                <div class="text-right">
+                    <a href="@Url.Action("Index", "Usuario")" class="elements">
+                    <span>Usuarios</span>
+                    </a>
+                </div>
         </a>
-    </li>
-
-</div>
+    </div>
+</section>
