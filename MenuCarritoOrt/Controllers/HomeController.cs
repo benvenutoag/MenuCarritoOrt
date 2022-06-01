@@ -76,7 +76,7 @@ namespace MenuCarritoOrt.Controllers
 
                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal).Wait();
 
-                    return RedirectToAction("Index", "Comidas");
+                    return RedirectToAction("Index", "Categorias");
                 }
                 else
                 {
