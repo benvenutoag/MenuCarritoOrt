@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MenuCarritoOrt.Datos;
 using MenuCarritoOrt.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MenuCarritoOrt.Controllers
 {
+    [Authorize(Roles = "ADMIN")]
+    //[Authorize]
     public class UsuarioController : Controller
     {
         private readonly BaseDatos _context;
@@ -23,6 +26,12 @@ namespace MenuCarritoOrt.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Usuarios.ToListAsync());
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> NoAutorizado()
+        {
+            return View();
         }
 
         // GET: Usuario/Details/5

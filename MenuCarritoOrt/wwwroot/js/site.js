@@ -6,8 +6,8 @@
 
 
 
-//const navMenu = document.querySelector("#navMenu");
+const navMenu = document.querySelector("#navMenu");
 
-//navMenu.addEventListener("click", () => {
-//    navMenu.classList.toggle("active");
-//})
+navMenu.addEventListener("click", () => {
+    navMenu.classList.toggle("active");
+})
