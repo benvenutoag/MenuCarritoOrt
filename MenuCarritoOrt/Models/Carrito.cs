@@ -22,5 +22,29 @@ namespace MenuCarritoOrt.Models
         public int IdProducto { get; set; }
 
         public int IdUsuario { get; set; }
+
+        public double DevolverTotal()
+        {
+            double total = 0;
+            if (Comidas.Count > 0 && Bebidas.Count > 0 && Postres.Count > 0)
+            {
+                foreach (var item in Comidas)
+                {
+                    total += item.Precio;
+                }
+                foreach (var item in Bebidas)
+                {
+                    total += item.Precio;
+                }
+                foreach (var item in Postres)
+                {
+                    total += item.Precio;
+                }
+            }
+
+            return total;
+        }
+
+
     }
 }
