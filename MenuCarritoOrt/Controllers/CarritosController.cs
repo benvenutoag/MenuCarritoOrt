@@ -149,5 +149,14 @@ namespace MenuCarritoOrt.Controllers
         {
             return _context.Carritos.Any(e => e.Id == id);
         }
+
+        // POST: Carritos/Cerrar/5
+        [HttpPost, ActionName("Cerrar")]
+        [ValidateAntiForgeryToken]
+        public double Cerrar(int id)
+        {
+            Carrito carr = _context.Carritos.FirstOrDefault(m => m.Id == id);
+            return carr.DevolverTotal();
+        }
     }
 }
