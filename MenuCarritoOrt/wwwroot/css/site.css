@@ -108,3 +108,8 @@ body {
     transform: translateY() rotate(90deg);
 }
 
+/*Borde de imagenes
+#Imagen-Diseño img {
+    -moz-border-radius: 50px;
+} */
+
