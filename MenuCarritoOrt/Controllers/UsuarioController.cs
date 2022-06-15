@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MenuCarritoOrt.Controllers
 {
-    //[Authorize(Roles = "ADMIN")]
+    [Authorize(Roles = "ADMIN")]
     //[Authorize]
     public class UsuarioController : Controller
     {

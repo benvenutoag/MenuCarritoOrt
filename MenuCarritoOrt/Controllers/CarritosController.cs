@@ -158,5 +158,39 @@ namespace MenuCarritoOrt.Controllers
             Carrito carr = _context.Carritos.FirstOrDefault(m => m.Id == id);
             return carr.DevolverTotal();
         }
+
+        [HttpPost, ActionName("AgregarAlCarritoComida")]
+        [ValidateAntiForgeryToken]
+        public void AgregarAlCarritoComida(Comida comida, int id)
+        {
+            Carrito carr = _context.Carritos.FirstOrDefault(m => m.Id == id);
+            if (comida != null)
+            {
+                carr.Comidas.Add(comida);  
+            }
+        }
+
+        [HttpPost, ActionName("AgregarAlCarritoPostre")]
+        [ValidateAntiForgeryToken]
+        public void AgregarAlCarritoPostre(Postre postre, int id)
+        {
+            Carrito carr = _context.Carritos.FirstOrDefault(m => m.Id == id);
+            if (postre != null)
+            {
+                carr.Postres.Add(postre);
+            }
+        }
+
+        [HttpPost, ActionName("AgregarAlCarritoBebida")]
+        [ValidateAntiForgeryToken]
+        public void AgregarAlCarritoBebida(Bebida bebida, int id)
+        {
+            Carrito carr = _context.Carritos.FirstOrDefault(m => m.Id == id);
+            if (bebida != null)
+            {
+                carr.Bebidas.Add(bebida);
+            }
+        }
+
     }
 }
