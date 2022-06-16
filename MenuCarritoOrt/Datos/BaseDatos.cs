@@ -15,15 +15,16 @@ namespace MenuCarritoOrt.Datos
         }
         public DbSet<Usuario> Usuarios { get; set; }
 
-        public DbSet<Postre> Postres { get; set; }
+        public DbSet<Postre> Postres { get; set; }// se va
 
-        public DbSet<Bebida> Bebidas { get; set; }
+        public DbSet<Bebida> Bebidas { get; set; } // se va
 
-        public DbSet<Comida> Comidas { get; set; }
+        public DbSet<Comida> Comidas { get; set; } // se va
 
         public DbSet<Categoria> Categorias { get; set; }
 
         public DbSet<Carrito> Carritos { get; set; }
 
+        public DbSet<Producto> Productos { get; set; }
     }
 }

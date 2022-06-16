@@ -10,22 +10,22 @@ using MenuCarritoOrt.Models;
 
 namespace MenuCarritoOrt.Controllers
 {
-    public class CarritosController : Controller
+    public class ProductosController : Controller
     {
         private readonly BaseDatos _context;
 
-        public CarritosController(BaseDatos context)
+        public ProductosController(BaseDatos context)
         {
             _context = context;
         }
 
-        // GET: Carritos
+        // GET: Productos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Carritos.ToListAsync());
+            return View(await _context.Productos.ToListAsync());
         }
 
-        // GET: Carritos/Details/5
+        // GET: Productos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace MenuCarritoOrt.Controllers
                 return NotFound();
             }
 
-            var carrito = await _context.Carritos
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (carrito == null)
+            var producto = await _context.Productos
+                .FirstOrDefaultAsync(m => m.IdProducto == id);
+            if (producto == null)
             {
                 return NotFound();
             }
 
-            return View(carrito);
+            return View(producto);
         }
 
-        // GET: Carritos/Create
+        // GET: Productos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Carritos/Create
+        // POST: Productos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IdProducto,IdUsuario")] Carrito carrito)
+        public async Task<IActionResult> Create([Bind("IdProducto,Nombre,Precio,Descripcion,Categoria")] Producto producto)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(carrito);
+                _context.Add(producto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(carrito);
+            return View(producto);
         }
 
-        // GET: Carritos/Edit/5
+        // GET: Productos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace MenuCarritoOrt.Controllers
                 return NotFound();
             }
 
-            var carrito = await _context.Carritos.FindAsync(id);
-            if (carrito == null)
+            var producto = await _context.Productos.FindAsync(id);
+            if (producto == null)
             {
                 return NotFound();
             }
-            return View(carrito);
+            return View(producto);
         }
 
-        // POST: Carritos/Edit/5
+        // POST: Productos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,IdProducto,IdUsuario")] Carrito carrito)
+        public async Task<IActionResult> Edit(int id, [Bind("IdProducto,Nombre,Precio,Descripcion,Categoria")] Producto producto)
         {
-            if (id != carrito.Id)
+            if (id != producto.IdProducto)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace MenuCarritoOrt.Controllers
             {
                 try
                 {
-                    _context.Update(carrito);
+                    _context.Update(producto);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CarritoExists(carrito.Id))
+                    if (!ProductoExists(producto.IdProducto))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace MenuCarritoOrt.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(carrito);
+            return View(producto);
         }
 
-        // GET: Carritos/Delete/5
+        // GET: Productos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,39 +124,30 @@ namespace MenuCarritoOrt.Controllers
                 return NotFound();
             }
 
-            var carrito = await _context.Carritos
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (carrito == null)
+            var producto = await _context.Productos
+                .FirstOrDefaultAsync(m => m.IdProducto == id);
+            if (producto == null)
             {
                 return NotFound();
             }
 
-            return View(carrito);
+            return View(producto);
         }
 
-        // POST: Carritos/Delete/5
+        // POST: Productos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var carrito = await _context.Carritos.FindAsync(id);
-            _context.Carritos.Remove(carrito);
+            var producto = await _context.Productos.FindAsync(id);
+            _context.Productos.Remove(producto);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CarritoExists(int id)
+        private bool ProductoExists(int id)
         {
-            return _context.Carritos.Any(e => e.Id == id);
+            return _context.Productos.Any(e => e.IdProducto == id);
         }
-
-        //// POST: Carritos/Cerrar/5
-        //[HttpPost, ActionName("Cerrar")]
-        //[ValidateAntiForgeryToken]
-        //public double Cerrar(int id)
-        //{
-        //    Carrito carr = _context.Carritos.FirstOrDefault(m => m.Id == id);
-        //    return carr.DevolverTotal();
-        //}
     }
 }
