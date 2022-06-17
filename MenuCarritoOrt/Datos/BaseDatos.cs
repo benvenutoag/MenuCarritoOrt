@@ -15,9 +15,6 @@ namespace MenuCarritoOrt.Datos
         }
         public DbSet<Usuario> Usuarios { get; set; }
 
-
-        public DbSet<Categoria> Categorias { get; set; }
-
         public DbSet<Carrito> Carritos { get; set; }
 
         public DbSet<Producto> Productos { get; set; }
