@@ -19,6 +19,13 @@ namespace MenuCarritoOrt.Models
 
         public int IdUsuario { get; set; }
 
+        public int Cantidad { get; set; }
+
+        public virtual Producto Producto { get; set; }
+
+
+
+
         
 
 
