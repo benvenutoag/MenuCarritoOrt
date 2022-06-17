@@ -29,6 +29,20 @@ namespace MenuCarritoOrt.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult IndexIngreso()
+        {
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult IndexAdmin()
+        {
+
+            return View();
+        }
+
         [HttpPost]
         public IActionResult Index(string email, string password)
         {
@@ -66,7 +80,7 @@ namespace MenuCarritoOrt.Controllers
 
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal).Wait();
 
-                return RedirectToAction("Index", "Usuario");
+                return RedirectToAction("IndexAdmin", "Home");
             }
             else
             {
@@ -89,15 +103,18 @@ namespace MenuCarritoOrt.Controllers
 
                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal).Wait();
 
-                    return RedirectToAction("Index", "Categorias");
+                    return RedirectToAction("IndexIngreso", "Home");
+
                 } else if (!passEstaBien && mailExiste){
                     return RedirectToAction("Index", "Home");
+
                 }
                 else if (!mailExiste)
                 {
                     return RedirectToAction("Create", "Usuario");
                 }
             }
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Privacy()
