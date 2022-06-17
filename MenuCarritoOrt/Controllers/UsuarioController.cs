@@ -163,92 +163,88 @@ namespace MenuCarritoOrt.Controllers
             return _context.Usuarios.Any(e => e.Id == id);
         }
 
-        //[AllowAnonymous]
-        //public IActionResult Ingresar(string returnUrl)
-        //{
-        //    TempData["UrlIngreso"] = returnUrl;
-        //    return View();
-        //}
+        // GET: Usuario/Ingresar/5
+
+        [AllowAnonymous]
+        public IActionResult Ingresar(string returnUrl)
+        {
+            TempData["UrlIngreso"] = returnUrl;
+            return View();
+        }
 
 
-        // POST: Usuario 
+        // POST: Usuario/Ingresar/5
         [HttpPost]
         [AllowAnonymous]
 
-        public IActionResult Ingresar(string email, string password)
+        public async Task<IActionResult> Ingresar(string email, string password)
         {
 
-            
             var usuario = _context
-              .Usuarios
-              .Where(o => o.Email.ToUpper().Equals(email.ToUpper()) && o.Password.ToUpper().Equals(password.ToUpper()))
-              .FirstOrDefault();
-
-            var mailCheck = _context
               .Usuarios
               .Where(o => o.Email.ToUpper().Equals(email.ToUpper())).FirstOrDefault();
 
-            var passCheck = _context
-              .Usuarios
-              .Where(o => o.Password.ToUpper().Equals(password.ToUpper())).FirstOrDefault();
-
-            bool passEstaBien = passCheck != null;
-
-
-            if (email == "jrr10@gmail.com.ar" && password == "romancito")
+            if (usuario != null)
             {
-
-
-                ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-
-                identity.AddClaim(new Claim(ClaimTypes.Name, usuario.Nombre));
-
-                identity.AddClaim(new Claim(ClaimTypes.Role, "ADMIN"));
-
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()));
-
-                identity.AddClaim(new Claim(ClaimTypes.GivenName, usuario.Nombre));
-
-                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-
-                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal).Wait();
-
-                return RedirectToAction("IndexAdmin", "Home");
-            }
-            else
-            {
-
-                bool mailExiste = mailCheck != null;
-
-                if (mailExiste && passEstaBien)
+                if (password.SequenceEqual(usuario.Password))
                 {
-                    ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                    if (email == "jrr10@gmail.com.ar" && password == "romancito")
+                    {
+                        ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    identity.AddClaim(new Claim(ClaimTypes.Name, usuario.Nombre));
+                        identity.AddClaim(new Claim(ClaimTypes.Name, usuario.Nombre));
 
-                    identity.AddClaim(new Claim(ClaimTypes.Role, "USUARIO"));
+                        identity.AddClaim(new Claim(ClaimTypes.Role, "ADMIN"));
 
-                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()));
+                        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()));
 
-                    identity.AddClaim(new Claim(ClaimTypes.GivenName, usuario.Nombre));
+                        identity.AddClaim(new Claim(ClaimTypes.GivenName, usuario.Email));
 
-                    ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+                        identity.AddClaim(new Claim("IdUsuario", usuario.Id.ToString()));
+                        identity.AddClaim(new Claim("NombreUsuario", usuario.Nombre.ToString()));
 
-                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal).Wait();
 
-                    return RedirectToAction("IndexIngreso", "Home");
+                        ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
-                }
-                else if (!passEstaBien && mailExiste)
-                {
-                    return RedirectToAction("Index", "Home");
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                }
-                else if (!mailExiste)
-                {
-                    return RedirectToAction("Create", "Usuario");
+                        return RedirectToAction("IndexAdmin", "Home");
+                    }
+                    else
+                    {
+                        ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+
+                        identity.AddClaim(new Claim(ClaimTypes.Name, usuario.Nombre));
+
+                        identity.AddClaim(new Claim(ClaimTypes.Role, "USUARIO"));
+
+                        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()));
+
+                        identity.AddClaim(new Claim(ClaimTypes.GivenName, usuario.Email));
+
+                        identity.AddClaim(new Claim("IdUsuario", usuario.Id.ToString()));
+                        identity.AddClaim(new Claim("NombreUsuario", usuario.Nombre.ToString()));
+
+
+                        ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                        return RedirectToAction("IndexIngreso", "Home");
+
+                    }
                 }
             }
+            return View();
+
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Salir()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
             return RedirectToAction("Index", "Home");
         }
 
