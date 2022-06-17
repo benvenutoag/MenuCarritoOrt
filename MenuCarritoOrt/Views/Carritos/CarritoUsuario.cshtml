@@ -1,0 +1,42 @@
+﻿@model MenuCarritoOrt.Models.Carrito
+
+@{
+    ViewData["Title"] = "Carrito";
+}
+
+<h1>Carrito</h1>
+<p>
+    <a asp-action="AgregarAlCarrito" asp-controller="Carritos">Agregar Productos</a>
+</p>
+<p>
+    <a asp-action="VaciarCarrito" asp-controller="Carritos" asp-route-id="@Model.Id">Vaciar Carrito</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Producto
+            </th>
+            
+            <th>
+                Precio
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Productos)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+               
+            </tr>
+        }
+    </tbody>
+</table>

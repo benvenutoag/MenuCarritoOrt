@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MenuCarritoOrt.Datos;
 using MenuCarritoOrt.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MenuCarritoOrt.Controllers
 {
@@ -21,10 +22,22 @@ namespace MenuCarritoOrt.Controllers
 
 
         // GET: Carritos
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Carritos.ToListAsync());
+            var carritoCompras = _context.Carritos;
+            return View(await carritoCompras.ToListAsync());
         }
+
+        // GET: Carritos
+        [Authorize(Roles = "USUARIO")]
+        public async Task<IActionResult> CarritoUsuario(int id)
+        {
+            var carrito = _context.Carritos.FirstOrDefaultAsync(n => n.IdUsuario == id);
+
+            return View(await carrito);
+        }
+        
 
         // GET: Carritos/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -33,7 +46,7 @@ namespace MenuCarritoOrt.Controllers
             {
                 return NotFound();
             }
-
+            
             var carrito = await _context.Carritos
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (carrito == null)
@@ -47,6 +60,7 @@ namespace MenuCarritoOrt.Controllers
         // GET: Carritos/Create
         public IActionResult Create()
         {
+            ViewData["IdUsuario"] = new SelectList(_context.Usuarios, "Id", "Email");
             return View();
         }
 
@@ -59,10 +73,12 @@ namespace MenuCarritoOrt.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 _context.Add(carrito);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdUsuario"] = new SelectList(_context.Usuarios, "Id", "Email", carrito.IdUsuario);
             return View(carrito);
         }
 
@@ -151,17 +167,17 @@ namespace MenuCarritoOrt.Controllers
             return _context.Carritos.Any(e => e.Id == id);
         }
 
-        //public void AgregarAlCarrito(int id, int idProducto)
-        //{
-        //    var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
-        //    var producto = _context.Productos.FirstOrDefault(m => m.IdProducto == idProducto);
+        public void AgregarAlCarrito(int id, Producto producto)
+        {
+            var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
 
-        //    if (producto != null)
-        //    {
-        //        carrito.Productos.Add(producto);
-        //    }
-        //    _context.SaveChanges();
-        //}
+            if (producto != null)
+            {
+                carrito.Productos.Add(producto);
+            }
+            _context.SaveChanges();
+
+        }
 
         //public void RemoverProducto(int id, int idProducto)
         //{
@@ -174,12 +190,18 @@ namespace MenuCarritoOrt.Controllers
         //    _context.SaveChanges();
         //}
 
-        //public void VaciarCarrito(int id)
-        //{
-        //    var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
-
-        //    carrito.Productos.Clear();
-        //}
+        public void VaciarCarrito(int id)
+        {
+            var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
+            if (carrito != null)
+            {
+                carrito.Productos.Clear();
+            }
+            else
+            {
+                throw new SystemException("No se pudo vaciar el carrito");
+            }
+        }
 
         //// POST: Carritos/Cerrar/5
         //[HttpPost, ActionName("Cerrar")]
@@ -194,7 +216,7 @@ namespace MenuCarritoOrt.Controllers
         //    }
 
         //    return total;
-            
+
         //}
 
     }
