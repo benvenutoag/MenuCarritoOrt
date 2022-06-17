@@ -29,7 +29,7 @@ namespace MenuCarritoOrt.Controllers
             return View(await carritoCompras.ToListAsync());
         }
 
-        // GET: Carritos
+        // GET: Carritos/CarritoUsuario
         [Authorize(Roles = "USUARIO")]
         public async Task<IActionResult> CarritoUsuario(int id)
         {
