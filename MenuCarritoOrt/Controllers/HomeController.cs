@@ -30,13 +30,25 @@ namespace MenuCarritoOrt.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(string email)
+        public IActionResult Index(string email, string password)
         {
             var usuario = _context
               .Usuarios
-              .Where(o => o.Email.ToUpper().Equals(email.ToUpper()))
+              .Where(o => o.Email.ToUpper().Equals(email.ToUpper()) && o.Password.ToUpper().Equals(password.ToUpper()))
               .FirstOrDefault();
-            if (email == "jrr10@gmail.com.ar")
+
+            var mailCheck = _context
+              .Usuarios
+              .Where(o => o.Email.ToUpper().Equals(email.ToUpper())).FirstOrDefault();
+
+            var passCheck = _context
+              .Usuarios
+              .Where(o => o.Password.ToUpper().Equals(password.ToUpper())).FirstOrDefault();
+
+            bool passEstaBien = passCheck != null;
+            
+
+            if (email == "jrr10@gmail.com.ar" && password == "romancito")
             {
 
 
@@ -58,9 +70,10 @@ namespace MenuCarritoOrt.Controllers
             }
             else
             {
-
-                bool usuarioExiste = usuario != null;
-                if (usuarioExiste)
+                
+                bool mailExiste = mailCheck != null;
+                
+                if (mailExiste && passEstaBien)
                 {
                     ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -77,8 +90,10 @@ namespace MenuCarritoOrt.Controllers
                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal).Wait();
 
                     return RedirectToAction("Index", "Categorias");
+                } else if (!passEstaBien && mailExiste){
+                    return RedirectToAction("Index", "Home");
                 }
-                else
+                else if (!mailExiste)
                 {
                     return RedirectToAction("Create", "Usuario");
                 }

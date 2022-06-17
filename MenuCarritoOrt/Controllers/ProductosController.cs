@@ -149,5 +149,11 @@ namespace MenuCarritoOrt.Controllers
         {
             return _context.Productos.Any(e => e.IdProducto == id);
         }
+
+        //// GET: Producto/ListaProductos/5
+        //public ActionResult ListaProductos (int id)
+        //{
+        //    if (!id)
+        //}
     }
 }
