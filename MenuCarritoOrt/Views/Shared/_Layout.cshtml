@@ -31,19 +31,29 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Productos" asp-action="Index">Productos</a>
-                        </li> 
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
                         </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Carritos" asp-action="Index">Carrito</a>
-                        </li> 
                         <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Categorias" asp-action="Index">Categorias</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Carritos" asp-action="Index">Carrito</a>
                         </li>
+                     
                     </ul>
+
+
                 </div>
+            @if (User.IsInRole("ADMIN"))
+            {
+                
+            }
             </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form asp-controller="Usuario" asp-action="Salir" method="post">
+                    <button type="submit" class="nav-link font-weight-bold text-light border border-dark btn btn-danger">Salir</button>
+                </form>
+            }
         </nav>
     </header>
     <div class="container">

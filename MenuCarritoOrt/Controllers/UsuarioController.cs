@@ -239,7 +239,7 @@ namespace MenuCarritoOrt.Controllers
             return View();
 
         }
-
+        [Authorize]
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Salir()
