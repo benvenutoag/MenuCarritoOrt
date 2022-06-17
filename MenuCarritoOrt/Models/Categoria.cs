@@ -14,6 +14,5 @@ namespace MenuCarritoOrt.Models
         [Display(Name = "Nombre de Categoría")]
         public string Descripcion { get; set; }
 
-        
     }
 }

@@ -10,22 +10,22 @@ using MenuCarritoOrt.Models;
 
 namespace MenuCarritoOrt.Controllers
 {
-    public class PostresController : Controller
+    public class ProductosController : Controller
     {
         private readonly BaseDatos _context;
 
-        public PostresController(BaseDatos context)
+        public ProductosController(BaseDatos context)
         {
             _context = context;
         }
 
-        // GET: Postres
+        // GET: Productos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Postres.ToListAsync());
+            return View(await _context.Productos.ToListAsync());
         }
 
-        // GET: Postres/Details/5
+        // GET: Productos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace MenuCarritoOrt.Controllers
                 return NotFound();
             }
 
-            var postre = await _context.Postres
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (postre == null)
+            var producto = await _context.Productos
+                .FirstOrDefaultAsync(m => m.IdProducto == id);
+            if (producto == null)
             {
                 return NotFound();
             }
 
-            return View(postre);
+            return View(producto);
         }
 
-        // GET: Postres/Create
+        // GET: Productos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Postres/Create
+        // POST: Productos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nombre,Precio,Descripcion,id")] Postre postre)
+        public async Task<IActionResult> Create([Bind("IdProducto,Nombre,Precio,Descripcion,Categoria")] Producto producto)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(postre);
+                _context.Add(producto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(postre);
+            return View(producto);
         }
 
-        // GET: Postres/Edit/5
+        // GET: Productos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace MenuCarritoOrt.Controllers
                 return NotFound();
             }
 
-            var postre = await _context.Postres.FindAsync(id);
-            if (postre == null)
+            var producto = await _context.Productos.FindAsync(id);
+            if (producto == null)
             {
                 return NotFound();
             }
-            return View(postre);
+            return View(producto);
         }
 
-        // POST: Postres/Edit/5
+        // POST: Productos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Nombre,Precio,Descripcion,id")] Postre postre)
+        public async Task<IActionResult> Edit(int id, [Bind("IdProducto,Nombre,Precio,Descripcion,Categoria")] Producto producto)
         {
-            if (id != postre.Id)
+            if (id != producto.IdProducto)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace MenuCarritoOrt.Controllers
             {
                 try
                 {
-                    _context.Update(postre);
+                    _context.Update(producto);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PostreExists(postre.Id))
+                    if (!ProductoExists(producto.IdProducto))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace MenuCarritoOrt.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(postre);
+            return View(producto);
         }
 
-        // GET: Postres/Delete/5
+        // GET: Productos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,36 @@ namespace MenuCarritoOrt.Controllers
                 return NotFound();
             }
 
-            var postre = await _context.Postres
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (postre == null)
+            var producto = await _context.Productos
+                .FirstOrDefaultAsync(m => m.IdProducto == id);
+            if (producto == null)
             {
                 return NotFound();
             }
 
-            return View(postre);
+            return View(producto);
         }
 
-        // POST: Postres/Delete/5
+        // POST: Productos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var postre = await _context.Postres.FindAsync(id);
-            _context.Postres.Remove(postre);
+            var producto = await _context.Productos.FindAsync(id);
+            _context.Productos.Remove(producto);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PostreExists(int id)
+        private bool ProductoExists(int id)
         {
-            return _context.Postres.Any(e => e.Id == id);
+            return _context.Productos.Any(e => e.IdProducto == id);
         }
+
+        //// GET: Producto/ListaProductos/5
+        //public ActionResult ListaProductos (int id)
+        //{
+        //    if (!id)
+        //}
     }
 }

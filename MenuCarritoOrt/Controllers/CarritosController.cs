@@ -13,11 +13,12 @@ namespace MenuCarritoOrt.Controllers
     public class CarritosController : Controller
     {
         private readonly BaseDatos _context;
-
+        
         public CarritosController(BaseDatos context)
         {
             _context = context;
         }
+
 
         // GET: Carritos
         public async Task<IActionResult> Index()
@@ -150,13 +151,51 @@ namespace MenuCarritoOrt.Controllers
             return _context.Carritos.Any(e => e.Id == id);
         }
 
-        // POST: Carritos/Cerrar/5
-        [HttpPost, ActionName("Cerrar")]
-        [ValidateAntiForgeryToken]
-        public double Cerrar(int id)
-        {
-            Carrito carr = _context.Carritos.FirstOrDefault(m => m.Id == id);
-            return carr.DevolverTotal();
-        }
+        //public void AgregarAlCarrito(int id, int idProducto)
+        //{
+        //    var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
+        //    var producto = _context.Productos.FirstOrDefault(m => m.IdProducto == idProducto);
+
+        //    if (producto != null)
+        //    {
+        //        carrito.Productos.Add(producto);
+        //    }
+        //    _context.SaveChanges();
+        //}
+
+        //public void RemoverProducto(int id, int idProducto)
+        //{
+        //    var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
+        //    var producto = _context.Productos.FirstOrDefault(m => m.IdProducto == idProducto);
+        //    if (producto != null)
+        //    {
+        //        carrito.Productos.Remove(producto);
+        //    }
+        //    _context.SaveChanges();
+        //}
+
+        //public void VaciarCarrito(int id)
+        //{
+        //    var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
+
+        //    carrito.Productos.Clear();
+        //}
+
+        //// POST: Carritos/Cerrar/5
+        //[HttpPost, ActionName("Cerrar")]
+        //[ValidateAntiForgeryToken]
+        //public double Cerrar(int id)
+        //{
+        //    Carrito carr = _context.Carritos.FirstOrDefault(m => m.Id == id);
+        //    var productos = carr.Productos;
+        //    double total = 0;
+        //    foreach(Producto producto in productos){
+        //        total += producto.Precio;
+        //    }
+
+        //    return total;
+            
+        //}
+
     }
 }
