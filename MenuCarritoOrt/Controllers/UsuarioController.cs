@@ -238,9 +238,8 @@ namespace MenuCarritoOrt.Controllers
             return View();
 
         }
-        [Authorize]
+
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Salir()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

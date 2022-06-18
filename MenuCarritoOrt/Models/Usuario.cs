@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,9 +11,14 @@ namespace MenuCarritoOrt.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [Required]
         public string Nombre { get; set; }
+
+        [Required]
         public string Apellido { get; set; }
 
+        [Required]
         [EmailAddress]
         public string Email { get; set; }
         [Required]
@@ -20,6 +26,8 @@ namespace MenuCarritoOrt.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [NotMapped]
+        public Carrito Carrito { get; set; }
 
     }
 }
