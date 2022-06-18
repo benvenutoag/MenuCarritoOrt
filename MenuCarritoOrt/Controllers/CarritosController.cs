@@ -14,7 +14,7 @@ namespace MenuCarritoOrt.Controllers
     public class CarritosController : Controller
     {
         private readonly BaseDatos _context;
-        
+
         public CarritosController(BaseDatos context)
         {
             _context = context;
@@ -34,10 +34,11 @@ namespace MenuCarritoOrt.Controllers
         public async Task<IActionResult> CarritoUsuario(int id)
         {
             var carrito = _context.Carritos.FirstOrDefaultAsync(n => n.IdUsuario == id);
+            var usuario = _context.Usuarios.FirstOrDefaultAsync(i => i.Id == id);
 
             return View(await carrito);
         }
-        
+
 
         // GET: Carritos/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -46,7 +47,7 @@ namespace MenuCarritoOrt.Controllers
             {
                 return NotFound();
             }
-            
+
             var carrito = await _context.Carritos
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (carrito == null)
@@ -73,7 +74,7 @@ namespace MenuCarritoOrt.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+
                 _context.Add(carrito);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -179,6 +180,21 @@ namespace MenuCarritoOrt.Controllers
 
         }
 
+        // POST: Carritos/Agregar/5
+        public async Task<ActionResult> AgregarCarrito(Producto producto)
+        {
+            var idUsuario = int.Parse(User.FindFirst("IdUsuario").Value);
+
+            var carrito = await _context.Carritos.FirstOrDefaultAsync(c => c.IdUsuario == idUsuario);
+
+            _context.Productos.Add(producto);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Carrito), new { id = carrito.IdUsuario });
+
+        }
+
         //public void RemoverProducto(int id, int idProducto)
         //{
         //    var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
@@ -190,18 +206,19 @@ namespace MenuCarritoOrt.Controllers
         //    _context.SaveChanges();
         //}
 
-        public void VaciarCarrito(int id)
-        {
-            var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
-            if (carrito != null)
-            {
-                carrito.Productos.Clear();
-            }
-            else
-            {
-                throw new SystemException("No se pudo vaciar el carrito");
-            }
-        }
+        //public async Task<ActionResult> VaciarCarrito(int id)
+        //{
+        //    var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
+        //    if (carrito != null)
+        //    {
+        //        carrito.Productos.Clear();
+        //        return RedirectToAction("Index", "Carrito")
+        //    }
+        //    else
+        //    {
+        //        throw new SystemException("No se pudo vaciar el carrito");
+        //    }
+        //}
 
         //// POST: Carritos/Cerrar/5
         //[HttpPost, ActionName("Cerrar")]

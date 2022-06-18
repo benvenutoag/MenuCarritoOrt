@@ -29,21 +29,30 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Productos" asp-action="Index">Menu</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Carritos" asp-action="Index">Carrito</a>
-                        </li>
-                     
+                        @if (User.IsInRole("ADMIN"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Carritos" asp-action="Index">Carrito</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Carritos" asp-action="CarritoUsuario">Carrito</a>
+                            </li>
+                        }
+
                     </ul>
 
 
                 </div>
-            @if (User.IsInRole("ADMIN"))
-            {
-                
-            }
+                @if (User.IsInRole("ADMIN"))
+                {
+
+                }
             </div>
             @if (User.Identity.IsAuthenticated)
             {
