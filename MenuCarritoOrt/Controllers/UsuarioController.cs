@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace MenuCarritoOrt.Controllers
 {
-
     //[Authorize(Roles = "ADMIN")]
     //[Authorize]
     public class UsuarioController : Controller
@@ -247,7 +246,6 @@ namespace MenuCarritoOrt.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
 
     }
 
