@@ -181,17 +181,22 @@ namespace MenuCarritoOrt.Controllers
         }
 
         // POST: Carritos/Agregar/5
-        public async Task<ActionResult> AgregarCarrito(Producto producto)
+        public async Task<ActionResult> AgregarCarrito(int IdProducto)
         {
             var idUsuario = int.Parse(User.FindFirst("IdUsuario").Value);
 
             var carrito = await _context.Carritos.FirstOrDefaultAsync(c => c.IdUsuario == idUsuario);
+            var producto = await _context.Productos.FirstOrDefaultAsync(p => p.IdProducto == IdProducto);
+            List<Producto> ProductosCarrito = new List<Producto>();
 
-            _context.Productos.Add(producto);
+            if (producto != null) {
+                ProductosCarrito.Add(producto);
+            }
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Carrito), new { id = carrito.IdUsuario });
+            //return RedirectToAction(nameof(Carrito), new { id = carrito.IdUsuario });
+            return View("CarritoUsuario");
 
         }
 

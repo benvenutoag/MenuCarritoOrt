@@ -108,8 +108,9 @@ body {
     transform: translateY() rotate(90deg);
 }
 
-/*Borde de imagenes
-#Imagen-Diseño img {
-    -moz-border-radius: 50px;
-} */
+/*.banner a img {
+    border-color: black;
+    border-style:hidden;
+    border-radius: 100px;
+}*/
 
