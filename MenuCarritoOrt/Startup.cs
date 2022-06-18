@@ -63,16 +63,17 @@ namespace MenuCarritoOrt
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-
+     
             app.UseCookiePolicy();
         }
-
+        
         public static void ConfiguracionCookie(CookieAuthenticationOptions opciones)
         {
             opciones.LoginPath = "/Usuario/Ingresar";
             opciones.AccessDeniedPath = "/Usuario/NoAutorizado";
             opciones.LogoutPath = "/Usuario/Salir";
             opciones.ExpireTimeSpan = System.TimeSpan.FromMinutes(10);
+            
         }
     }
 }
