@@ -35,7 +35,7 @@ namespace MenuCarritoOrt.Controllers
         public async Task<IActionResult> CarritoUsuario(int id)
         {
             int idusuario = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var carrito = _context.Carritos.Include(p => p.Productos)
+            var carrito = _context.Carritos
                 .FirstOrDefaultAsync(n => n.IdUsuario == idusuario);
 
             return View(await carrito);
@@ -172,6 +172,7 @@ namespace MenuCarritoOrt.Controllers
 
         public void AgregarAlCarrito(int id, Producto producto)
         {
+            
             var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
 
             if (producto != null)
