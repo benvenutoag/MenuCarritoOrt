@@ -25,31 +25,25 @@
         </tr>
     </thead>
     <tbody>
-
-        @*@if (Model.Productos.Count == 0)
+        @if (Model != null)
         {
-            <tr>
-                <td colspan="5" class="text-center">
-                    No agregaste productos al carrito
-                </td>
-            </tr>
-        }*@
+            foreach (var item in Model.Productos)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
 
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Precio)
+                    </td>
 
-
-
-        @foreach (var item in Model.Productos)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Precio)
-                </td>
-
-            </tr>
+                </tr>
+            }
         }
 
     </tbody>

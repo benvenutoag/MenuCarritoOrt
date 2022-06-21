@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MenuCarritoOrt.Datos;
 using MenuCarritoOrt.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace MenuCarritoOrt.Controllers
 {
@@ -33,8 +34,9 @@ namespace MenuCarritoOrt.Controllers
         [Authorize(Roles = "USUARIO")]
         public async Task<IActionResult> CarritoUsuario(int id)
         {
-            var carrito = _context.Carritos.FirstOrDefaultAsync(n => n.IdUsuario == id);
-            var usuario = _context.Usuarios.FirstOrDefaultAsync(i => i.Id == id);
+            int idusuario = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var carrito = _context.Carritos
+                .FirstOrDefaultAsync(n => n.IdUsuario == idusuario);
 
             return View(await carrito);
         }
@@ -74,7 +76,7 @@ namespace MenuCarritoOrt.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                carrito.Productos = new List<Producto>();
                 _context.Add(carrito);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -170,6 +172,7 @@ namespace MenuCarritoOrt.Controllers
 
         public void AgregarAlCarrito(int id, Producto producto)
         {
+            
             var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
 
             if (producto != null)
