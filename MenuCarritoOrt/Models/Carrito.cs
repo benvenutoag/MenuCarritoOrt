@@ -13,6 +13,9 @@ namespace MenuCarritoOrt.Models
         public List<Producto> Productos { get; set; }
 
         [NotMapped]
+        public List<Producto> ProductosCarrito { get; set; }
+
+        [NotMapped]
         public Usuario Usuario { get; set; }
 
         [Key]

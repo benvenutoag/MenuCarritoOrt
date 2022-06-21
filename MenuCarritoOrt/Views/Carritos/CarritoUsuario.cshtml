@@ -4,7 +4,7 @@
     ViewData["Title"] = "Carrito";
 }
 
-<h1>CarritoUsuario</h1>
+<h1>Mi Carrito</h1>
 @*<p>
         <a asp-action="AgregarAlCarrito" asp-controller="Carritos">Agregar Productos</a>
     </p>
@@ -29,10 +29,14 @@
         {
             foreach (var item in Model.Productos)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nombre)
-                    </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
 
                     <td>
                         @Html.DisplayFor(modelItem => item.Precio)
