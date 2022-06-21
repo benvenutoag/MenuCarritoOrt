@@ -5,10 +5,10 @@
 }
 
 <h1>Mi Carrito</h1>
+<p>
+    <a asp-action="AgregarAlCarrito" asp-controller="Carritos">Agregar Productos</a>
+</p>
 @*<p>
-        <a asp-action="AgregarAlCarrito" asp-controller="Carritos">Agregar Productos</a>
-    </p>
-    <p>
         <a asp-action="VaciarCarrito" asp-controller="Carritos" asp-route-id="@Model.Id">Vaciar Carrito</a>
     </p>*@
 <table class="table">
@@ -26,21 +26,31 @@
     </thead>
     <tbody>
 
-            
-        
-            @foreach (var item in Model.Productos)
-            {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Precio)
-            </td>
+        @*@if (Model.Productos.Count == 0)
+        {
+            <tr>
+                <td colspan="5" class="text-center">
+                    No agregaste productos al carrito
+                </td>
+            </tr>
+        }*@
 
-        </tr>
-            }
-        
+
+
+
+        @foreach (var item in Model.Productos)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+
+            </tr>
+        }
+
     </tbody>
 </table>

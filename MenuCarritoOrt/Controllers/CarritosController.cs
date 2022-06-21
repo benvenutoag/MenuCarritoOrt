@@ -189,7 +189,8 @@ namespace MenuCarritoOrt.Controllers
             var producto = await _context.Productos.FirstOrDefaultAsync(p => p.IdProducto == IdProducto);
             List<Producto> ProductosCarrito = new List<Producto>();
 
-            if (producto != null) {
+            if (producto != null)
+            {
                 ProductosCarrito.Add(producto);
             }
 
