@@ -47,15 +47,20 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Carritos" asp-action="Index">Carrito</a>
-                            </li>
+                            @*<li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Carritos" asp-action="Index">Carrito</a>
+                                </li>*@
                         }
-                        else
+                        else if (User.Identity.IsAuthenticated)
                         {
+
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Carritos" asp-action="CarritoUsuario">Carrito</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Details" asp-route-id="@User.FindFirst("IdUsuario").Value">Datos</a>
+                            </li>
+
                         }
 
                     </ul>
@@ -69,6 +74,7 @@
             </div>
             @if (User.Identity.IsAuthenticated)
             {
+
                 <form asp-controller="Usuario" asp-action="Salir" method="post">
                     <button type="submit" class="nav-link font-weight-bold text-light border border-dark btn btn-danger">Salir</button>
                 </form>
