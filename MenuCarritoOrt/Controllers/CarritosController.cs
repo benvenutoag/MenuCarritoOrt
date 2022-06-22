@@ -169,60 +169,6 @@ namespace MenuCarritoOrt.Controllers
             return _context.Carritos.Any(e => e.Id == id);
         }
 
-        //public void AgregarAlCarrito(int id, Producto producto)
-        //{
-
-        //    var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
-
-        //    if (producto != null)
-        //    {
-        //        carrito.Productos.Add(producto);
-        //    }
-        //    _context.SaveChanges();
-
-        //}
-
-        // POST: Carritos/Agregar/5
-        //public async Task<ActionResult> AgregarCarrito(int IdProducto)
-        //{
-
-        //    var idUsuario = int.Parse(User.FindFirst("IdUsuario").Value);
-
-        //    var carrito = await _context.Carritos.FirstOrDefaultAsync(c => c.IdUsuario == idUsuario);
-        //    var producto = await _context.Productos.FirstOrDefaultAsync(p => p.IdProducto == IdProducto);
-        //    List<Producto> ProductosCarrito = new List<Producto>();
-        //    var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id == idUsuario);
-
-
-        //    if (usuario.Carrito == null)
-        //    {
-        //        usuario.Carrito = new Carrito
-        //        {
-        //            Productos = ProductosCarrito,
-        //            Usuario = usuario,
-        //            IdUsuario = idUsuario
-        //        };
-        //    }
-
-        //    if (usuario.Carrito.Productos == null)
-        //    {
-        //        usuario.Carrito.Productos = ProductosCarrito;
-        //    }
-
-        //    var listaFinal = usuario.Carrito.Productos;
-
-        //    if (producto != null)
-        //    {
-        //        listaFinal.Add(producto);
-        //    }
-
-        //    await _context.SaveChangesAsync();
-
-        //    //return RedirectToAction(nameof(Carrito), new { id = carrito.IdUsuario });
-        //    return View("CarritoUsuario");
-
-        //}
-
 
 
         // POST : Carritos/AgregarCarrito/5
@@ -238,6 +184,7 @@ namespace MenuCarritoOrt.Controllers
                 carrito = new Carrito();
                 carrito.IdUsuario = idUsuario;
                 carrito.Usuario = usuario;
+                carrito.Id = usuario.Id;
             }
 
             if (usuario.Carrito == null)
