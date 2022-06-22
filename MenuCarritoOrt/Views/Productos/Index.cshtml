@@ -60,35 +60,16 @@
             }
             else
             {
-                <td>
-                    @Html.DisplayFor(modelItem => item.Precio)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Categoria)
-                </td>
-                @if (User.IsInRole("ADMIN"))
+                if (User.Identity.IsAuthenticated)
                 {
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.IdProducto">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.IdProducto">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.IdProducto">Delete</a>
+                        @Html.ActionLink("Agregar", "AgregarCarrito", "Carritos", new { Id = item.IdProducto }, null)
                     </td>
                 }
-                else
-                {
-                    if (User.Identity.IsAuthenticated)
-                    {
-                        <td>
-                            @Html.ActionLink("Agregar", "AgregarCarrito", "Carritos", new { Id = item.IdProducto }, null)
-                        </td>
-                    }
-                }
+               
             }
 
-            </tr>
+        </tr>
         }
     </tbody>
 </table>
