@@ -71,14 +71,17 @@ namespace MenuCarritoOrt.Controllers
             {
                 _context.Add(usuario);
 
-                var carrito = new Carrito
+                if (User.IsInRole("USUARIO"))
                 {
-                    IdUsuario = usuario.Id,
-                    Productos = new List<Producto>(),
-                    Usuario = usuario
-                };
+                    var carrito = new Carrito
+                    {
+                        IdUsuario = usuario.Id,
+                        Productos = new List<Producto>(),
+                        Usuario = usuario
+                    };
+                    _context.Carritos.Add(carrito);
+                }
 
-                _context.Carritos.Add(carrito);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
 
