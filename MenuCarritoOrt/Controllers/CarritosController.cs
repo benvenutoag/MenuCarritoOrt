@@ -26,17 +26,16 @@ namespace MenuCarritoOrt.Controllers
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Index()
         {
-            var carritoCompras = _context.Carritos;
+            var carritoCompras = _context.Carritos.Include(u => u.Usuario);
             return View(await carritoCompras.ToListAsync());
         }
 
         // GET: Carritos/CarritoUsuario
         [Authorize(Roles = "USUARIO")]
-        public async Task<IActionResult> CarritoUsuario(int id)
+        public async Task<IActionResult> CarritoUsuario(int idUsuario)
         {
-            int idusuario = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var carrito = _context.Carritos
-                .FirstOrDefaultAsync(n => n.IdUsuario == idusuario);
+                .FirstOrDefaultAsync(n => n.IdUsuario == idUsuario);
 
             return View(await carrito);
         }
@@ -170,79 +169,103 @@ namespace MenuCarritoOrt.Controllers
             return _context.Carritos.Any(e => e.Id == id);
         }
 
-        public void AgregarAlCarrito(int id, Producto producto)
-        {
-            
-            var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
+        //public void AgregarAlCarrito(int id, Producto producto)
+        //{
 
-            if (producto != null)
-            {
-                carrito.Productos.Add(producto);
-            }
-            _context.SaveChanges();
+        //    var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
 
-        }
+        //    if (producto != null)
+        //    {
+        //        carrito.Productos.Add(producto);
+        //    }
+        //    _context.SaveChanges();
+
+        //}
 
         // POST: Carritos/Agregar/5
-        public async Task<ActionResult> AgregarCarrito(int IdProducto)
+        //public async Task<ActionResult> AgregarCarrito(int IdProducto)
+        //{
+
+        //    var idUsuario = int.Parse(User.FindFirst("IdUsuario").Value);
+
+        //    var carrito = await _context.Carritos.FirstOrDefaultAsync(c => c.IdUsuario == idUsuario);
+        //    var producto = await _context.Productos.FirstOrDefaultAsync(p => p.IdProducto == IdProducto);
+        //    List<Producto> ProductosCarrito = new List<Producto>();
+        //    var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id == idUsuario);
+
+
+        //    if (usuario.Carrito == null)
+        //    {
+        //        usuario.Carrito = new Carrito
+        //        {
+        //            Productos = ProductosCarrito,
+        //            Usuario = usuario,
+        //            IdUsuario = idUsuario
+        //        };
+        //    }
+
+        //    if (usuario.Carrito.Productos == null)
+        //    {
+        //        usuario.Carrito.Productos = ProductosCarrito;
+        //    }
+
+        //    var listaFinal = usuario.Carrito.Productos;
+
+        //    if (producto != null)
+        //    {
+        //        listaFinal.Add(producto);
+        //    }
+
+        //    await _context.SaveChangesAsync();
+
+        //    //return RedirectToAction(nameof(Carrito), new { id = carrito.IdUsuario });
+        //    return View("CarritoUsuario");
+
+        //}
+
+
+
+        // POST : Carritos/AgregarCarrito/5
+
+        public async Task<IActionResult> AgregarCarrito(Producto producto)
         {
             var idUsuario = int.Parse(User.FindFirst("IdUsuario").Value);
-
             var carrito = await _context.Carritos.FirstOrDefaultAsync(c => c.IdUsuario == idUsuario);
-            var producto = await _context.Productos.FirstOrDefaultAsync(p => p.IdProducto == IdProducto);
-            List<Producto> ProductosCarrito = new List<Producto>();
+            var usuario = await _context.Usuarios.SingleOrDefaultAsync(u => u.Id == idUsuario);
 
-            if (producto != null) {
-                ProductosCarrito.Add(producto);
+            if (carrito == null)
+            {
+                carrito = new Carrito();
+                carrito.IdUsuario = idUsuario;
+                carrito.Usuario = usuario;
             }
+
+            if (carrito.Productos == null)
+            {
+                carrito.Productos = new List<Producto>();
+            }
+
+            carrito.Productos.Add(producto);
+
 
             await _context.SaveChangesAsync();
 
-            //return RedirectToAction(nameof(Carrito), new { id = carrito.IdUsuario });
-            return View("CarritoUsuario");
-
+            return RedirectToAction(nameof(CarritoUsuario), new { id = carrito.IdUsuario });
         }
 
-        //public void RemoverProducto(int id, int idProducto)
-        //{
-        //    var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
-        //    var producto = _context.Productos.FirstOrDefault(m => m.IdProducto == idProducto);
-        //    if (producto != null)
-        //    {
-        //        carrito.Productos.Remove(producto);
-        //    }
-        //    _context.SaveChanges();
-        //}
+        public async Task<ActionResult> Vaciar(int id)
+        {
+            var carrito = await _context.Carritos.FirstOrDefaultAsync(m => m.Id == id);
+            if (carrito != null && carrito.Productos != null)
+            {
+                carrito.Productos.Clear();
+                return RedirectToAction("Index", "Carrito");
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
+            }
 
-        //public async Task<ActionResult> VaciarCarrito(int id)
-        //{
-        //    var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
-        //    if (carrito != null)
-        //    {
-        //        carrito.Productos.Clear();
-        //        return RedirectToAction("Index", "Carrito")
-        //    }
-        //    else
-        //    {
-        //        throw new SystemException("No se pudo vaciar el carrito");
-        //    }
-        //}
-
-        //// POST: Carritos/Cerrar/5
-        //[HttpPost, ActionName("Cerrar")]
-        //[ValidateAntiForgeryToken]
-        //public double Cerrar(int id)
-        //{
-        //    Carrito carr = _context.Carritos.FirstOrDefault(m => m.Id == id);
-        //    var productos = carr.Productos;
-        //    double total = 0;
-        //    foreach(Producto producto in productos){
-        //        total += producto.Precio;
-        //    }
-
-        //    return total;
-
-        //}
-
+        }
     }
 }

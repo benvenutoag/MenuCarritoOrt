@@ -1,16 +1,16 @@
-﻿@model MenuCarritoOrt.Models.Carrito
+﻿@model MenuCarritoOrt.Models.Carrito 
 
 @{
     ViewData["Title"] = "Carrito";
 }
 
 <h1>Mi Carrito</h1>
-@*<p>
-        <a asp-action="AgregarAlCarrito" asp-controller="Carritos">Agregar Productos</a>
+<p>
+        <a asp-action="Index" asp-controller="Productos">Agregar Productos</a>
     </p>
     <p>
-        <a asp-action="VaciarCarrito" asp-controller="Carritos" asp-route-id="@Model.Id">Vaciar Carrito</a>
-    </p>*@
+        <a asp-action="Vaciar" asp-controller="Carritos" asp-route-id="@Model.Id">Vaciar Carrito</a>
+    </p>
 <table class="table">
     <thead>
         <tr>
@@ -25,18 +25,14 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model != null)
+        @if (Model != null && Model.Productos != null)
         {
             foreach (var item in Model.Productos)
             {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Precio)
-            </td>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
 
                     <td>
                         @Html.DisplayFor(modelItem => item.Precio)

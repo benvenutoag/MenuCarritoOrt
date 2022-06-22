@@ -14,8 +14,6 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace MenuCarritoOrt.Controllers
 {
-    //[Authorize(Roles = "ADMIN")]
-    //[Authorize]
     public class UsuarioController : Controller
     {
         private readonly BaseDatos _context;
@@ -72,8 +70,19 @@ namespace MenuCarritoOrt.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(usuario);
+
+                var carrito = new Carrito
+                {
+                    IdUsuario = usuario.Id,
+                    Productos = new List<Producto>(),
+                    Usuario = usuario
+                };
+
+                _context.Carritos.Add(carrito);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+
+
             }
             return View(usuario);
         }

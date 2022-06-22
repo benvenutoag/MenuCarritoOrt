@@ -20,11 +20,17 @@
             <div class="container">
                 @if (User.IsInRole("ADMIN"))
                 {
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="IndexAdmin">MenuCarritoOrt</a>
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="IndexAdmin">Inicio</a>
+                }
+                else if (User.IsInRole("USUARIO"))
+                {
+
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="IndexIngreso">Inicio</a>
+
                 }
                 else
                 {
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="IndexIngreso">MenuCarritoOrt</a>
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
 
                 }
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
