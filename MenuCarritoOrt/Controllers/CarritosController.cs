@@ -240,6 +240,11 @@ namespace MenuCarritoOrt.Controllers
                 carrito.Usuario = usuario;
             }
 
+            if (usuario.Carrito == null)
+            {
+                usuario.Carrito = carrito;
+            }
+
             if (carrito.Productos == null)
             {
                 carrito.Productos = new List<Producto>();

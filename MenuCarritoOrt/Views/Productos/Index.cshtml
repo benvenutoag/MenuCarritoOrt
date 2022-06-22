@@ -36,38 +36,38 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                $
-                @Html.DisplayFor(modelItem => item.Precio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categoria)
-            </td>
-            @if (User.IsInRole("ADMIN"))
-            {
+            <tr>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.IdProducto">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.IdProducto">Detalles</a> |
-                    <a asp-action="Delete" asp-route-id="@item.IdProducto">Borrar</a>
+                    @Html.DisplayFor(modelItem => item.Nombre)
                 </td>
-            }
-            else
-            {
-                if (User.Identity.IsAuthenticated)
+                <td>
+                    $
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria)
+                </td>
+                @if (User.IsInRole("ADMIN"))
                 {
                     <td>
-                        @Html.ActionLink("Agregar", "AgregarCarrito", "Carritos", new { Id = item.IdProducto }, null)
+                        <a asp-action="Edit" asp-route-id="@item.IdProducto">Editar</a>
+                        <a asp-action="Details" asp-route-id="@item.IdProducto">Detalles</a>
+                        <a asp-action="Delete" asp-route-id="@item.IdProducto">Borrar</a>
                     </td>
                 }
-               
-            }
+
+                else
+                {
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        <td>
+                            @Html.ActionLink("Agregar", "AgregarCarrito", "Carritos", new { Id = item.IdProducto }, null)
+                        </td>
+                    }
+                }
 
         </tr>
         }
