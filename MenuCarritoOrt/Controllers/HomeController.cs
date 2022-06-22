@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace MenuCarritoOrt.Controllers
 {
-    public class HomeController : Controller /*test*/
+    public class HomeController : Controller
     {
         private readonly BaseDatos _context;
 
@@ -29,60 +29,18 @@ namespace MenuCarritoOrt.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Index(string email)
+        [HttpGet]
+        public IActionResult IndexIngreso()
         {
-            var usuario = _context
-              .Usuarios
-              .Where(o => o.Email.ToUpper().Equals(email.ToUpper()))
-              .FirstOrDefault();
-            if (email == "jrr10@gmail.com.ar")
-            {
 
+            return View();
+        }
 
-                ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+        [HttpGet]
+        public IActionResult IndexAdmin()
+        {
 
-                identity.AddClaim(new Claim(ClaimTypes.Name, usuario.Nombre));
-
-                identity.AddClaim(new Claim(ClaimTypes.Role, "ADMIN"));
-
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()));
-
-                identity.AddClaim(new Claim(ClaimTypes.GivenName, usuario.Nombre));
-
-                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-
-                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal).Wait();
-
-                return RedirectToAction("Index", "Usuario");
-            }
-            else
-            {
-
-                bool usuarioExiste = usuario != null;
-                if (usuarioExiste)
-                {
-                    ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-
-                    identity.AddClaim(new Claim(ClaimTypes.Name, usuario.Nombre));
-
-                    identity.AddClaim(new Claim(ClaimTypes.Role, "USUARIO"));
-
-                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()));
-
-                    identity.AddClaim(new Claim(ClaimTypes.GivenName, usuario.Nombre));
-
-                    ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-
-                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal).Wait();
-
-                    return RedirectToAction("Index", "Categorias");
-                }
-                else
-                {
-                    return RedirectToAction("Create", "Usuario");
-                }
-            }
+            return View();
         }
 
         public IActionResult Privacy()

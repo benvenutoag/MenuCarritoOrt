@@ -10,41 +10,15 @@ namespace MenuCarritoOrt.Models
     public class Carrito
     {
         [NotMapped]
-        public List<Comida> Comidas { get; set; }
+        public List<Producto> Productos { get; set; }
+
         [NotMapped]
-        public List<Bebida> Bebidas { get; set; }
-        [NotMapped]
-        public List<Postre> Postres { get; set; }
+        public Usuario Usuario { get; set; }
 
         [Key]
         public int Id { get; set; }
 
-        public int IdProducto { get; set; }
-
         public int IdUsuario { get; set; }
-
-        public double DevolverTotal()
-        {
-            double total = 0;
-            if (Comidas.Count > 0 && Bebidas.Count > 0 && Postres.Count > 0)
-            {
-                foreach (var item in Comidas)
-                {
-                    total += item.Precio;
-                }
-                foreach (var item in Bebidas)
-                {
-                    total += item.Precio;
-                }
-                foreach (var item in Postres)
-                {
-                    total += item.Precio;
-                }
-            }
-
-            return total;
-        }
-
 
     }
 }

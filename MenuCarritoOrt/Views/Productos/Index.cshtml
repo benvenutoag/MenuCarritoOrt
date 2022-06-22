@@ -1,0 +1,75 @@
+﻿@model IEnumerable<MenuCarritoOrt.Models.Producto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Productos</h1>
+@if (User.IsInRole("ADMIN"))
+{
+    <p>
+        <a asp-action="Create">Crear Nuevo Producto</a>
+    </p>
+}
+
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categoria)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    $
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria)
+                </td>
+                @if (User.IsInRole("ADMIN"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdProducto">Editar</a>
+                        <a asp-action="Details" asp-route-id="@item.IdProducto">Detalles</a>
+                        <a asp-action="Delete" asp-route-id="@item.IdProducto">Borrar</a>
+                    </td>
+                }
+
+                else
+                {
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        <td>
+                            @Html.ActionLink("Agregar", "AgregarCarrito", "Carritos", new { Id = item.IdProducto }, null)
+                        </td>
+                    }
+                }
+
+            </tr>
+        }
+    </tbody>
+</table>

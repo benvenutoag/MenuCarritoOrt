@@ -18,8 +18,21 @@
 
             </div>
             <div class="container">
+                @if (User.IsInRole("ADMIN"))
+                {
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="IndexAdmin">Inicio</a>
+                }
+                else if (User.IsInRole("USUARIO"))
+                {
 
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MenuCarritoOrt</a>
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="IndexIngreso">Inicio</a>
+
+                }
+                else
+                {
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+
+                }
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -27,23 +40,39 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Productos" asp-action="Index">Menu</a>
                         </li>
-                        <!--<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li> -->
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Carritos" asp-action="Index">Carrito</a>
-                        </li> 
-                        <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Categorias" asp-action="Index">Categorias</a>
-                        </li>
+                        @if (User.IsInRole("ADMIN"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Carritos" asp-action="Index">Carrito</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Carritos" asp-action="CarritoUsuario">Carrito</a>
+                            </li>
+                        }
+
                     </ul>
+
+
                 </div>
+                @if (User.IsInRole("ADMIN"))
+                {
+
+                }
             </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form asp-controller="Usuario" asp-action="Salir" method="post">
+                    <button type="submit" class="nav-link font-weight-bold text-light border border-dark btn btn-danger">Salir</button>
+                </form>
+            }
         </nav>
     </header>
     <div class="container">

@@ -108,3 +108,9 @@ body {
     transform: translateY() rotate(90deg);
 }
 
+/*.banner a img {
+    border-color: black;
+    border-style:hidden;
+    border-radius: 100px;
+}*/
+

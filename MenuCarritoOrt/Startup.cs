@@ -31,6 +31,8 @@ namespace MenuCarritoOrt
             services.AddControllersWithViews();
             services.AddDbContext<BaseDatos>(options =>
           options.UseSqlite(@"filename=C:\CarritoMenuBD\CarritoMenu.db"));
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,16 +63,17 @@ namespace MenuCarritoOrt
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-
+     
             app.UseCookiePolicy();
         }
-
+        
         public static void ConfiguracionCookie(CookieAuthenticationOptions opciones)
         {
-            opciones.LoginPath = "/Home/Index";
+            opciones.LoginPath = "/Usuario/Ingresar";
             opciones.AccessDeniedPath = "/Usuario/NoAutorizado";
-            opciones.LogoutPath = "/Login/Logout";
+            opciones.LogoutPath = "/Usuario/Salir";
             opciones.ExpireTimeSpan = System.TimeSpan.FromMinutes(10);
+            
         }
     }
 }

@@ -8,11 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using MenuCarritoOrt.Datos;
 using MenuCarritoOrt.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace MenuCarritoOrt.Controllers
 {
-    [Authorize(Roles = "ADMIN")]
-    //[Authorize]
     public class UsuarioController : Controller
     {
         private readonly BaseDatos _context;
@@ -23,6 +24,7 @@ namespace MenuCarritoOrt.Controllers
         }
 
         // GET: Usuario
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Usuarios.ToListAsync());
@@ -68,8 +70,22 @@ namespace MenuCarritoOrt.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(usuario);
+
+                if (User.IsInRole("USUARIO"))
+                {
+                    var carrito = new Carrito
+                    {
+                        IdUsuario = usuario.Id,
+                        Productos = new List<Producto>(),
+                        Usuario = usuario
+                    };
+                    _context.Carritos.Add(carrito);
+                }
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+
+
             }
             return View(usuario);
         }
@@ -158,5 +174,91 @@ namespace MenuCarritoOrt.Controllers
         {
             return _context.Usuarios.Any(e => e.Id == id);
         }
+
+        // GET: Usuario/Ingresar/5
+
+        [AllowAnonymous]
+        public IActionResult Ingresar(string returnUrl)
+        {
+            TempData["UrlIngreso"] = returnUrl;
+            return View();
+        }
+
+
+        // POST: Usuario/Ingresar/5
+        [HttpPost]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> Ingresar(string email, string password)
+        {
+
+            var usuario = _context
+              .Usuarios
+              .Where(o => o.Email.ToUpper().Equals(email.ToUpper())).FirstOrDefault();
+
+            if (usuario != null)
+            {
+                if (password.SequenceEqual(usuario.Password))
+                {
+                    if (email == "jrr10@gmail.com.ar" && password == "romancito")
+                    {
+                        ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+
+                        identity.AddClaim(new Claim(ClaimTypes.Name, usuario.Nombre));
+
+                        identity.AddClaim(new Claim(ClaimTypes.Role, "ADMIN"));
+
+                        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()));
+
+                        identity.AddClaim(new Claim(ClaimTypes.GivenName, usuario.Email));
+
+                        identity.AddClaim(new Claim("IdUsuario", usuario.Id.ToString()));
+                        identity.AddClaim(new Claim("NombreUsuario", usuario.Nombre.ToString()));
+
+
+                        ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                        return RedirectToAction("IndexAdmin", "Home");
+                    }
+                    else
+                    {
+                        ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+
+                        identity.AddClaim(new Claim(ClaimTypes.Name, usuario.Nombre));
+
+                        identity.AddClaim(new Claim(ClaimTypes.Role, "USUARIO"));
+
+                        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()));
+
+                        identity.AddClaim(new Claim(ClaimTypes.GivenName, usuario.Email));
+
+                        identity.AddClaim(new Claim("IdUsuario", usuario.Id.ToString()));
+                        identity.AddClaim(new Claim("NombreUsuario", usuario.Nombre.ToString()));
+
+
+                        ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                        return RedirectToAction("IndexIngreso", "Home");
+
+                    }
+                }
+            }
+            return View();
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Salir()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Index", "Home");
+        }
+
     }
+
 }
