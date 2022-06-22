@@ -170,7 +170,6 @@ namespace MenuCarritoOrt.Controllers
         }
 
 
-
         // POST : Carritos/AgregarCarrito/5
 
         public async Task<IActionResult> AgregarCarrito(Producto producto)
@@ -198,7 +197,6 @@ namespace MenuCarritoOrt.Controllers
             }
 
             carrito.Productos.Add(producto);
-
 
             await _context.SaveChangesAsync();
 

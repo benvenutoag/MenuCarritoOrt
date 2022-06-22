@@ -18,8 +18,6 @@ namespace MenuCarritoOrt.Models
         [Key]
         public int Id { get; set; }
 
-        public int IdProducto { get; set; }
-
         public int IdUsuario { get; set; }
 
     }
