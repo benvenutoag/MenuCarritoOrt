@@ -170,20 +170,27 @@ namespace MenuCarritoOrt.Controllers
             return _context.Carritos.Any(e => e.Id == id);
         }
 
-        public void AgregarAlCarrito(int id, Producto producto)
-        {
+        //public async Task<ActionResult> AgregarAlCarrito(int id, Producto producto)
+        //{
+
+            // var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
+
+            //// if (producto != null)
+            // {
+            //    carrito.Productos.Add(producto);
+            // }
+            //_context.SaveChanges();
+
+          //  return (View("Productos"));
+        
+
+    //}
             
-            var carrito = _context.Carritos.FirstOrDefault(m => m.Id == id);
 
-            if (producto != null)
-            {
-                carrito.Productos.Add(producto);
-            }
-            _context.SaveChanges();
+    
 
-        }
-
-        // POST: Carritos/Agregar/5
+        // POST: Carritos/AgregarCarrito/5
+        
         public async Task<ActionResult> AgregarCarrito(int IdProducto)
         {
             var idUsuario = int.Parse(User.FindFirst("IdUsuario").Value);
