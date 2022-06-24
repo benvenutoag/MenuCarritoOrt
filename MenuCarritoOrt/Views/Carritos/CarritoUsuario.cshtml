@@ -25,22 +25,19 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model != null && Model.Productos != null)
-        {
-            foreach (var item in Model.Productos)
+        @if (Session["carrito"] != null)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nombre)
-                    </td>
+                foreach(var item in Session["carrito"] as List<MenuCarritoOrt.Models.CarritoItem>)
+                {
+                     <tr>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Precio)
-                    </td>
+                         <td>@item.Producto.IdProducto</td>
+                         <td>@item.Producto.Nombre</td>
+                         <td>@item.Producto.Precio</td>
 
-                </tr>
+                      </tr>
+                }
             }
-        }
 
     </tbody>
 </table>

@@ -172,35 +172,57 @@ namespace MenuCarritoOrt.Controllers
 
         // POST : Carritos/AgregarCarrito/5
 
-        public async Task<IActionResult> AgregarCarrito(Producto producto)
+        //public async Task<IActionResult> AgregarCarrito(Producto producto)
+
+        //{
+          //  var idUsuario = int.Parse(User.FindFirst("IdUsuario").Value);
+          //  var carrito = await _context.Carritos.FirstOrDefaultAsync(c => c.IdUsuario == idUsuario);
+          //  var usuario = await _context.Usuarios.SingleOrDefaultAsync(u => u.Id == idUsuario);
+
+          //  if (carrito == null)
+          //  {
+          //      carrito = new Carrito();
+          //      carrito.IdUsuario = idUsuario;
+          //      carrito.Usuario = usuario;
+          //      carrito.Id = usuario.Id;
+          // }
+
+          //  if (usuario.Carrito == null)
+          //  {
+          //      usuario.Carrito = carrito;
+          // }
+
+          //  if (carrito.Productos == null)
+          //  {
+          //      carrito.Productos = new List<Producto>();
+          //  }
+
+          //  carrito.Productos.Add(producto);
+
+          //  await _context.SaveChangesAsync();
+
+          //  return RedirectToAction(nameof(CarritoUsuario), new { id = carrito.IdUsuario });
+       // }
+
+
+        //GET: /Carrito/
+
+        public ActionResult AgregarCarrito(int id)
         {
-            var idUsuario = int.Parse(User.FindFirst("IdUsuario").Value);
-            var carrito = await _context.Carritos.FirstOrDefaultAsync(c => c.IdUsuario == idUsuario);
-            var usuario = await _context.Usuarios.SingleOrDefaultAsync(u => u.Id == idUsuario);
-
-            if (carrito == null)
+            if (Session["carrito"] == null)
             {
-                carrito = new Carrito();
-                carrito.IdUsuario = idUsuario;
-                carrito.Usuario = usuario;
-                carrito.Id = usuario.Id;
+                List<CarritoItem> compras = new List<CarritoItem>();
+                compras.Add(new CarritoItem(_context.Productos.Find(id), 1));
+                Session["carrito"] = compras;
+            }
+            else
+            {
+                List<CarritoItem> compras = (List<CarritoItem>)Session["carrito"];
+                compras.Add(new CarritoItem(_context.Productos.Find(id), 1));
+                Session["carrito"] = compras;
             }
 
-            if (usuario.Carrito == null)
-            {
-                usuario.Carrito = carrito;
-            }
-
-            if (carrito.Productos == null)
-            {
-                carrito.Productos = new List<Producto>();
-            }
-
-            carrito.Productos.Add(producto);
-
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction(nameof(CarritoUsuario), new { id = carrito.IdUsuario });
+            return View();
         }
 
         public async Task<ActionResult> Vaciar(int id)
