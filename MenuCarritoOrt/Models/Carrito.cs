@@ -9,16 +9,15 @@ namespace MenuCarritoOrt.Models
 {
     public class Carrito
     {
-        [NotMapped]
-        public List<Producto> Productos { get; set; }
+        [Key]
+        public Guid CarritoId { get; set; }
 
-        [NotMapped]
+        [ForeignKey(nameof(Usuario))]
+        public Guid UsuarioID { get; set; }
         public Usuario Usuario { get; set; }
 
-        [Key]
-        public int Id { get; set; }
-
-        public int IdUsuario { get; set; }
+        public List<CarritoItem> CarritosItems { get; set; }
+        public double Subtotal { get; set; }
 
     }
 }

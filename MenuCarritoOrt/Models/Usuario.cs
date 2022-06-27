@@ -10,7 +10,7 @@ namespace MenuCarritoOrt.Models
     public class Usuario
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public string Nombre { get; set; }
@@ -27,8 +27,6 @@ namespace MenuCarritoOrt.Models
         [Display (Name = "Contraseña")]
         public string Password { get; set; }
 
-        [NotMapped]
-        public Carrito Carrito { get; set; }
 
     }
 }

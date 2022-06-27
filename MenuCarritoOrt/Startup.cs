@@ -30,7 +30,7 @@ namespace MenuCarritoOrt
                 .AddCookie(ConfiguracionCookie);
             services.AddControllersWithViews();
             services.AddDbContext<BaseDatos>(options =>
-          options.UseSqlite(@"filename=C:\CarritoMenuBD\CarritoMenu.db"));
+          options.UseSqlite((@"filename = C:\basetest\BaseDeDatos.db")));
 
 
         }

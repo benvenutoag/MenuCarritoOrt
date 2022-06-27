@@ -27,7 +27,7 @@ namespace MenuCarritoOrt.Controllers
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Usuarios.ToListAsync());
+            return View(await _context.Usuario.ToListAsync());
         }
 
         [AllowAnonymous]
@@ -44,7 +44,7 @@ namespace MenuCarritoOrt.Controllers
                 return NotFound();
             }
 
-            var usuario = await _context.Usuarios
+            var usuario = await _context.Usuario
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (usuario == null)
             {

@@ -13,10 +13,12 @@ namespace MenuCarritoOrt.Datos
         {
 
         }
-        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
 
-        public DbSet<Carrito> Carritos { get; set; }
+        public DbSet<Carrito> Carrito { get; set; }
 
-        public DbSet<Producto> Productos { get; set; }
+        public DbSet<Producto> Producto { get; set; }
+
+        public DbSet<CarritoItem> CarritoItem { get; set; }
     }
 }

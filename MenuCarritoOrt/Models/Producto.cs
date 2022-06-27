@@ -9,16 +9,18 @@ namespace MenuCarritoOrt.Models
 {
     public class Producto
     {
-        [Key]
-        public int IdProducto { get; set; }
+        public Guid ProductoId { get; set; }
+
 
         public string Nombre { get; set; }
 
-        public double Precio { get; set; }
-
         public string Descripcion { get; set; }
 
-        public string Categoria { get; set; }
+
+        public float PrecioVigente { get; set; }
+
+
+        public string Foto { get; set; } = "default.png";
 
     }
 }
